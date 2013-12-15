@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>NetPaste</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="Content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <link href="Styles/netpaste.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="starter-template">
+            <h1>NetPaste</h1>
+
+            <input type="text" id="pasteHole" value="Paste here to send" />
+
+            <h2>Received Pastes</h2>
+            <a href="#" id="deletePastes" style="display: none;">Delete all pastes</a>
+            <div id="receivedPastesTest">
+
+            </div>
+
+            <!--table id="receivedPastes">
+
+                <tr>
+                    <th>From</th>
+                    <th>At</th>
+                    <th>Preview</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><button type="button" class="btn btn-sm btn-primary">Copy</button></td>
+                </tr>
+            </table-->
+        </div>
+
+    </div>
+
+    <script src="Scripts/jquery-2.0.3.js"></script>
+    <script src="Scripts/bootstrap.js"></script>
+    <script src="Scripts/moment.js"></script>
+
+    <script src="Scripts/jquery.signalR-2.0.1.min.js"></script>
+    <script src="signalr/hubs"></script>
+
+    <script src="Scripts/NetPaste/PasteStores/LocalPasteStore.js"></script>
+    <script src="Scripts/NetPaste/PasteStores/PasteStore.js"></script>
+    <script src="Scripts/NetPaste/PasteDataSender.js"></script>
+    <script src="Scripts/NetPaste/ReceivedPastesController.js"></script>
+    <script src="Scripts/NetPaste/ReceivedPastesView.js"></script>
+    <script src="Scripts/NetPaste/App.js"></script>
+
+    <script type="text/javascript">
+        var app = new NetPaste.App();
+    </script>
+</body>
+</html>
