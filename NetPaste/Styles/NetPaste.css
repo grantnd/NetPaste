@@ -4,20 +4,3 @@
 .receivedImage {
     max-width: 250px;
 }
-
-.receivedPaste {
-    background-color: #b7e8ea;
-    padding: 0px;
-    margin-bottom: 5px;
-}
-
-.receivedPaste p {
-    padding: 0px;
-    margin: 5px;
-}
-
-.receivedPastePreview {
-    background-color: #d8f7f8;
-    padding: 3px;
-    margin: 0px;
-}

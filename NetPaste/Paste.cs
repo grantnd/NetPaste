@@ -11,7 +11,7 @@
 
         public PasteData Data { get; set; }
 
-        public string Sender { get; set; }
+        public UserProfile Sender { get; set; }
 
         public DateTime Received { get; set; }
     }

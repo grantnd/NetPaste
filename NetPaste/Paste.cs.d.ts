@@ -3,7 +3,7 @@ declare module server {
 	interface Paste{
 		Id?: number;
         Data: PasteData;
-		Sender: string;
+        Sender: UserProfile;
 		Received: Date;
-    }
+}
 }

@@ -14,32 +14,41 @@
 
     <div class="container">
 
-        <div class="starter-template">
-            <h1>NetPaste</h1>
+        <h1>NetPaste</h1>
 
-            <input type="text" id="pasteHole" value="Paste here to send" />
+        <ul class="nav nav-pills">
+            <li class="active"><a href="#send" data-toggle="pill">Send</a></li>
+            <li>
+                <a href="#received" data-toggle="pill">
+                    <span class="badge pull-right" id="receivedBadge"></span>
+                    Received&nbsp;
+                </a>
+            </li>
+        </ul>
 
-            <h2>Received Pastes</h2>
-            <a href="#" id="deletePastes" style="display: none;">Delete all pastes</a>
-            <div id="receivedPastesTest">
+        <div class="tab-content">
 
+            <div class="tab-pane active " id="send">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div id="recipients-list">
+
+                        </div>
+                        <input type="text" id="pasteHole" value="Paste here to send" />
+                    </div>
+                </div>
             </div>
 
-            <!--table id="receivedPastes">
+            <div class="tab-pane" id="received">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div><button id="deletePastes" class="btn btn-danger" style="display: none;">Delete all pastes</button></div>
+                        <br />
+                        <div id="receivedPastesList"></div>
+                    </div>
+                </div>
+            </div>
 
-                <tr>
-                    <th>From</th>
-                    <th>At</th>
-                    <th>Preview</th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td><button type="button" class="btn btn-sm btn-primary">Copy</button></td>
-                </tr>
-            </table-->
         </div>
 
     </div>
@@ -53,7 +62,8 @@
 
     <script src="Scripts/NetPaste/PasteStores/LocalPasteStore.js"></script>
     <script src="Scripts/NetPaste/PasteStores/PasteStore.js"></script>
-    <script src="Scripts/NetPaste/PasteDataSender.js"></script>
+    <script src="Scripts/NetPaste/SendPasteController.js"></script>
+    <script src="Scripts/NetPaste/SendPasteView.js"></script>
     <script src="Scripts/NetPaste/ReceivedPastesController.js"></script>
     <script src="Scripts/NetPaste/ReceivedPastesView.js"></script>
     <script src="Scripts/NetPaste/App.js"></script>

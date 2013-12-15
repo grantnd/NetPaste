@@ -7,44 +7,67 @@
 
     public class NetPasteHub : Hub
     {
-        private static Dictionary<string, string> identityToConnectionIdLookup = new Dictionary<string, string>();
+        private static NetPasteUserIdProvider userIdProvider = new NetPasteUserIdProvider();
+        private static UserProfileService userProfileService = new UserProfileService();
 
         public override Task OnConnected()
         {
-            string identity = GetIdentity();
+            try
+            {
+                string userId;
 
-            identityToConnectionIdLookup[identity] = Context.ConnectionId;
+                if ((userId = userIdProvider.GetUserId(Context.Request)) == null)
+                {
+                    userId = userIdProvider.CreateNewUserId(Context);
+                }
+
+                userProfileService.GenerateProfile(userId, Context);
+
+                Clients.All.updateRecipients(userProfileService.GetAllProfiles());
+            }
+            catch
+            {
+            }
 
             return base.OnConnected();
         }
 
-        private string GetIdentity()
-        {
-            return Context.Request.GetHttpContext().Request.UserHostAddress;
-        }
-
         public override Task OnDisconnected()
         {
-            string identity = GetIdentity();
+            try
+            {
+                string userId = userIdProvider.GetUserId(Context.Request);
 
-            identityToConnectionIdLookup.Remove(identity);
+                userProfileService.RemoveProfile(userId);
+
+                Clients.All.updateRecipients(userProfileService.GetAllProfiles());
+            }
+            catch
+            {
+
+            }
 
             return base.OnDisconnected();
         }
 
-        public void SendPaste(PasteData pasteData, string recipientIdentity)
+        public void SendPaste(PasteData pasteData, IEnumerable<string> recipientIds)
         {
-            var paste = new Paste();
+            var paste = new Paste()
+            {
+                Data = pasteData,
+                Sender = userProfileService.GetProfile(userIdProvider.GetUserId(Context.Request)),
+                Received = DateTime.Now
+            };
 
-            paste.Data = pasteData;
-            paste.Sender = GetIdentity();
-            paste.Received = DateTime.Now;
-            Clients.All.receivePaste(paste);
+            foreach (var recipientId in recipientIds)
+            {
+                Clients.User(recipientId).receivePaste(paste);
+            }
         }
 
-        public IEnumerable<string> GetRecipients()
+        public IEnumerable<UserProfile> GetRecipients()
         {
-            return null;
+            return userProfileService.GetAllProfiles();
         }
     }
 }
