@@ -1,0 +1,35 @@
+Username
+- Get username if not pesent in store
+- Register with server side on connect
+- Change username
+
+Sending
+- update recipient list wihtout clearing current selection
+- hide own device in recipient listab
+- use friendly name in recipient list
+- make recipient list scrollable
+- nicer paste box
+- disable paste box until recipient(s) selected
+- paste image on iphone
+
+Receiving
+- copying
+- individual deleting
+
+Tab counter of new received messages
+- only update if on send tab
+- clear when select received tab
+
+SignalR
+- keep alives
+- test disconnects etc.
+
+Other
+- logging - elmah?
+- require JS and/or bundling
+- general viewport styling etc.
+- general refactoring
+- use handlebars to render HTML
+- send notice to user a paste is on its way if large
+- desktop notifications
+- try backbone maybe to keep model and view in sync?

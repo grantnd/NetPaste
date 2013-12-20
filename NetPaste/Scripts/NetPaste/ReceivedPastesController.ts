@@ -3,7 +3,17 @@ module NetPaste {
 
         constructor(
             private pasteStore: PasteStores.PasteStore,
-            private receivedPasteView: ReceivedPastesView) {
+            private receivedPasteView: ReceivedPastesView)
+        {
+            this.setUpDeletePastesHandler();
+        }
+
+        private setUpDeletePastesHandler() {
+            var receivedPastesController = this;
+            $('#deletePastes').click(function (e) {
+                e.preventDefault();
+                receivedPastesController.deleteAllPastes();
+            });
         }
 
         public receivePaste(paste: server.Paste) {

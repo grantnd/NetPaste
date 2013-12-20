@@ -14,23 +14,7 @@ module NetPaste {
             this.receivedPastesView = new ReceivedPastesView(this.pasteStore.getAllPastes());
             this.receivedPastesController = new ReceivedPastesController(this.pasteStore, this.receivedPastesView);
 
-            this.setUpPasteHandler(this.sendPasteController);
-            this.setUpDeletePastesHandler(this.receivedPastesController);
             this.initialiseSignalR(this.sendPasteController, this.receivedPastesController);
-        }
-
-        private setUpPasteHandler(sender: SendPasteController) {
-            $('#pasteHole').on("paste", function (e) {
-                e.preventDefault();
-                sender.handlePasteEvent(e);
-            });
-        }
-
-        private setUpDeletePastesHandler(receivedPastesController: ReceivedPastesController) {
-            $('#deletePastes').click(function (e) {
-                e.preventDefault();
-                receivedPastesController.deleteAllPastes();
-            });
         }
 
         private initialiseSignalR(

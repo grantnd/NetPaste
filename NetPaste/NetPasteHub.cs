@@ -12,41 +12,28 @@
 
         public override Task OnConnected()
         {
-            try
+            string userId;
+
+            if ((userId = userIdProvider.GetUserId(Context.Request)) == null)
             {
-                string userId;
-
-                if ((userId = userIdProvider.GetUserId(Context.Request)) == null)
-                {
-                    userId = userIdProvider.CreateNewUserId(Context);
-                }
-
-                userProfileService.GenerateProfile(userId, Context);
-
-                Clients.All.updateRecipients(userProfileService.GetAllProfiles());
+                userId = userIdProvider.CreateNewUserId(Context);
             }
-            catch
-            {
-            }
+
+            userProfileService.GenerateProfile(userId, Context);
+
+            Clients.All.updateRecipients(userProfileService.GetAllProfiles());
 
             return base.OnConnected();
         }
 
         public override Task OnDisconnected()
         {
-            try
-            {
-                string userId = userIdProvider.GetUserId(Context.Request);
+            string userId = userIdProvider.GetUserId(Context.Request);
 
-                userProfileService.RemoveProfile(userId);
+            userProfileService.RemoveProfile(userId);
 
-                Clients.All.updateRecipients(userProfileService.GetAllProfiles());
-            }
-            catch
-            {
-
-            }
-
+            Clients.All.updateRecipients(userProfileService.GetAllProfiles());
+        
             return base.OnDisconnected();
         }
 

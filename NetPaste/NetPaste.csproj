@@ -40,6 +40,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Elmah">
+      <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
+    </Reference>
+    <Reference Include="ElmahR.Elmah">
+      <HintPath>..\packages\ElmahR.Elmah.1.0.2\lib\net35\ElmahR.Elmah.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Core">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.0.1\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
     </Reference>
@@ -80,6 +86,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Readme\Elmah.txt" />
     <Content Include="App_Readme\Handlebarsjs_README.md" />
     <Content Include="App_Readme\Handlebarsjs_LICENSE" />
     <None Include="Properties\PublishProfiles\netpaste.pubxml" />
@@ -91,6 +98,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Readme\TODO.txt" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -142,12 +150,18 @@
       <DependentUpon>PasteData.cs</DependentUpon>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Scripts\NetPaste\App.ts" />
+    <TypeScriptCompile Include="Scripts\NetPaste\PasteDataBuilders\TextPasteDataBuilder.ts" />
+    <TypeScriptCompile Include="Scripts\NetPaste\PasteDataBuilders\ImagePasteDataBuilder.ts" />
+    <TypeScriptCompile Include="Scripts\NetPaste\PasteDataBuilders\PasteDataBuilderFactory.ts" />
+    <TypeScriptCompile Include="Scripts\NetPaste\PasteDataBuilders\PasteDataBuilder.ts" />
     <TypeScriptCompile Include="Scripts\NetPaste\ReceivedPastesController.ts" />
     <TypeScriptCompile Include="Scripts\NetPaste\SendPasteController.ts" />
     <TypeScriptCompile Include="Scripts\NetPaste\PasteStores\LocalPasteStore.ts" />
     <TypeScriptCompile Include="Scripts\NetPaste\PasteStores\PasteStore.ts" />
     <TypeScriptCompile Include="Scripts\NetPaste\ReceivedPastesView.ts" />
     <TypeScriptCompile Include="Scripts\NetPaste\SendPasteView.ts" />
+    <TypeScriptCompile Include="Scripts\NetPaste\UsernameStores\LocalUsernameStore.ts" />
+    <TypeScriptCompile Include="Scripts\NetPaste\UsernameStores\UsernameStore.ts" />
     <TypeScriptCompile Include="Scripts\typings\bootstrap\bootstrap.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\handlebars\handlebars.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
@@ -158,7 +172,6 @@
     </TypeScriptCompile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Scripts\NetPaste\PasteDataBuilders\" />
     <Folder Include="Scripts\NetPaste\PasteDataPreviews\" />
     <Folder Include="Scripts\NetPaste\PasteRenderers\" />
   </ItemGroup>
