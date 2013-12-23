@@ -32,7 +32,13 @@ module NetPaste {
             }
 
             $.connection.hub.start()
-                .done(function () { console.log('Now connected, connection ID=' + $.connection.hub.id); })
+                .done(function ()
+                {
+                    console.log('Now connected, connection ID=' + $.connection.hub.id);
+                    $.connection.netPasteHub.server.getRecipients().done(function (recipients: Array<server.UserProfile>) {
+                        sendPasteController.updateRecipients(recipients);
+                    });
+                })
                 .fail(function () { console.log('Could not Connect!'); });
         }
     }

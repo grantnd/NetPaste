@@ -8,9 +8,7 @@
         public void Configuration(IAppBuilder app)
         {
             HubConfiguration configuration = new HubConfiguration();
-            var idProvider = new NetPasteUserIdProvider();
-            configuration.Resolver.Register(typeof(IUserIdProvider), () => idProvider);
-
+            
             app.MapSignalR(configuration);            
         }
     }

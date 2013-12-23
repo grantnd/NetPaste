@@ -7,18 +7,12 @@
 
     public class NetPasteHub : Hub
     {
-        private static NetPasteUserIdProvider userIdProvider = new NetPasteUserIdProvider();
         private static UserProfileService userProfileService = new UserProfileService();
 
         public override Task OnConnected()
         {
-            string userId;
-
-            if ((userId = userIdProvider.GetUserId(Context.Request)) == null)
-            {
-                userId = userIdProvider.CreateNewUserId(Context);
-            }
-
+            string userId = Context.User.Identity.Name;
+            
             userProfileService.GenerateProfile(userId, Context);
 
             Clients.All.updateRecipients(userProfileService.GetAllProfiles());
@@ -28,12 +22,12 @@
 
         public override Task OnDisconnected()
         {
-            string userId = userIdProvider.GetUserId(Context.Request);
+            string userId = Context.User.Identity.Name;
 
             userProfileService.RemoveProfile(userId);
 
             Clients.All.updateRecipients(userProfileService.GetAllProfiles());
-        
+
             return base.OnDisconnected();
         }
 
@@ -42,7 +36,7 @@
             var paste = new Paste()
             {
                 Data = pasteData,
-                Sender = userProfileService.GetProfile(userIdProvider.GetUserId(Context.Request)),
+                Sender = userProfileService.GetProfile(Context.User.Identity.Name),
                 Received = DateTime.Now
             };
 
