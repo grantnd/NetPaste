@@ -9,6 +9,7 @@
     {
         private static UserProfileService userProfileService = new UserProfileService();
 
+        [Authorize]
         public override Task OnConnected()
         {
             string userId = Context.User.Identity.Name;
@@ -20,6 +21,7 @@
             return base.OnConnected();
         }
 
+        [Authorize]
         public override Task OnDisconnected()
         {
             string userId = Context.User.Identity.Name;
@@ -31,6 +33,7 @@
             return base.OnDisconnected();
         }
 
+        [Authorize]
         public void SendPaste(PasteData pasteData, IEnumerable<string> recipientIds)
         {
             var paste = new Paste()

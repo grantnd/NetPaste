@@ -35,9 +35,9 @@ module NetPaste {
                 .done(function ()
                 {
                     console.log('Now connected, connection ID=' + $.connection.hub.id);
-                    $.connection.netPasteHub.server.getRecipients().done(function (recipients: Array<server.UserProfile>) {
-                        sendPasteController.updateRecipients(recipients);
-                    });
+                    //$.connection.netPasteHub.server.getRecipients().done(function (recipients: Array<server.UserProfile>) {
+                    //    sendPasteController.updateRecipients(recipients);
+                    //});
                 })
                 .fail(function () { console.log('Could not Connect!'); });
         }
