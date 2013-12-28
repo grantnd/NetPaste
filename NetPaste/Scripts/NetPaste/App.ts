@@ -1,4 +1,5 @@
 module NetPaste {
+
     export class App {
 
         private sendPasteView;
@@ -23,23 +24,23 @@ module NetPaste {
         {
             var netPasteHubProxy = $.connection.netPasteHub;
 
-            netPasteHubProxy.client.receivePaste = function (paste: server.Paste) {
+            netPasteHubProxy.client.receivePaste = (paste: server.Paste) => {
                 receivedPastesController.receivePaste(paste);
             }
 
-            netPasteHubProxy.client.updateRecipients = function (recipients: Array<server.UserProfile>) {
+            netPasteHubProxy.client.updateRecipients = (recipients: Array<server.UserProfile>) => {
                 sendPasteController.updateRecipients(recipients);
             }
 
             $.connection.hub.start()
-                .done(function ()
+                .done(() =>
                 {
                     console.log('Now connected, connection ID=' + $.connection.hub.id);
                     //$.connection.netPasteHub.server.getRecipients().done(function (recipients: Array<server.UserProfile>) {
                     //    sendPasteController.updateRecipients(recipients);
                     //});
                 })
-                .fail(function () { console.log('Could not Connect!'); });
+                .fail(() => { console.log('Could not Connect!'); });
         }
     }
 } 

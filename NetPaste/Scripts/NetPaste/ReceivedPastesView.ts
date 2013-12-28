@@ -1,5 +1,3 @@
-/// <reference path="../typings/moment/moment.d.ts" />
-/// <reference path="../typings/handlebars/handlebars.d.ts" />
 module NetPaste {
     export class ReceivedPastesView {
         private listElementId = '#receivedPastesList';
@@ -10,7 +8,7 @@ module NetPaste {
                     this.addPaste(initialPastes[i]);
                 }
                 $('#deletePastes').show();
-            }            
+            }  
         }
 
         public addPaste(paste: server.Paste) {
@@ -19,17 +17,7 @@ module NetPaste {
         }
 
         private prependPaste(paste: server.Paste, element: JQuery) {
-            element.prepend(
-                '<div id="paste' + paste.Id + '" class="panel panel-info">' +
-                    '<div class="panel-heading">' +
-                        '<p><b>From:</b> ' + paste.Sender.UserId + ' (' + paste.Sender.HostAddress + ')</p>' +
-                        '<p><b>On:</b> ' + moment(paste.Received).format('dddd, MMM Do YYYY [at] h:mm:ssa') + ' </p>' +
-                    '</div>' +
-                    '<div class="panel-body">' +
-                        '<div id="pastePreview' + paste.Id + '" class="pull-left"></div>' +
-                        '<div class="pull-right"><button id="copyButton' + paste.Id + '" class="btn btn-primary">Copy</button></div>' + 
-                    '</div>' +
-                '</div>');
+            element.prepend(Handlebars.templates.ReceivedPasteView(paste))
 
             this.appendPreview(paste, element.find('#pastePreview' + paste.Id));
         }

@@ -8,7 +8,7 @@ module NetPaste {
             var reader = new FileReader();
             var _this = this;
 
-            reader.addEventListener("loadend", function () {
+            reader.addEventListener("loadend", () => {
                 promise.resolve({ Type: "image/png", Value: reader.result.split(',')[1] });
             });
             

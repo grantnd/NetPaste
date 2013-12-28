@@ -7,18 +7,14 @@ module NetPaste {
             list.empty();
 
             for (var i = 0; i < recipients.length; i++) {
-                list.append('<div class="checkbox">' +
-                    '<label>' +
-                    '<input type="checkbox" data-user-id="' + recipients[i].UserId + '" />' + recipients[i].UserId + ' (' + recipients[i].HostAddress + ')' +
-                    '</label>' +
-                    '</div>');
+                list.append(Handlebars.templates.SendPasteRecipientView(recipients[i]));
             }
         }
 
         public getSelectedRecipientUserIds(): Array<string> {
-            var userIds = new Array<string>();
+            var userIds: Array<string> = [];
 
-            $(this.listElementId).find('input').each(function () {
+            $(this.listElementId).find('input').each(function() {
                 if (this.checked) {
                     userIds.push($(this).data('user-id'));
                 }

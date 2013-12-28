@@ -1,3 +1,8 @@
+- Use require for module loading
+- Use handlebars for templates
+- Use backbone
+- Sort out server side identity and username management
+
 Username
 - Get username from user if not pesent in store
 - Register with server side on connect
@@ -14,7 +19,8 @@ Sending
 - paste image on iphone
 
 Receiving
-- copying builder factory
+- copying
+- builder factory
 - individual deleting
 
 Tab counter of new received messages
@@ -30,10 +36,5 @@ Improve
 
 Other
 - logging - elmah?
-- require JS and/or bundling
-- general viewport styling etc.
-- general refactoring
-- use handlebars to render HTML
 - send notice to user a paste is on its way if large
 - desktop notifications
-- try backbone maybe to keep model and view in sync?

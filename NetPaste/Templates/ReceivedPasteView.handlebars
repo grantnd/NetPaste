@@ -1,0 +1,10 @@
+﻿<div id="paste{{Id}}" class="panel panel-info">
+    <div class="panel-heading">
+        <p><b>From:</b> {{Sender.UserId}} ({{Sender.HostAddress}})</p>
+        <p><b>On:</b> {{format-date 'dddd, MMM Do YYYY [at] h:mm:ssa' Received}}</p>
+    </div>
+    <div class="panel-body">
+        <div id="pastePreview{{Id}}" class="pull-left"></div>
+        <div class="pull-right"><button id="copyButton{{Id}}" class="btn btn-primary">Copy</button></div> 
+    </div>
+</div>

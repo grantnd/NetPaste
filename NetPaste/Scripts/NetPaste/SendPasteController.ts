@@ -8,7 +8,7 @@ module NetPaste
 
         private setUpPasteHandler() {
             var sendPasteController = this;
-            $('#pasteHole').on("paste", function (e) {
+            $('#pasteHole').on("paste", (e) => {
                 e.preventDefault();
                 sendPasteController.handlePasteEvent(e);
             });
@@ -32,7 +32,8 @@ module NetPaste
 
         private sendClipboardData(clipboardData, recipientUserIds: Array<string>) {
             var builder = PasteDataBuilderFactory.GetBuilder(clipboardData);
-            builder.BuildData(clipboardData).then(function (value) {
+
+            builder.BuildData(clipboardData).then((value) => {
                 var netPasteHubProxy = $.connection.netPasteHub;
                 netPasteHubProxy.server.sendPaste(value, recipientUserIds)
             });

@@ -10,7 +10,7 @@ module NetPaste {
 
         private setUpDeletePastesHandler() {
             var receivedPastesController = this;
-            $('#deletePastes').click(function (e) {
+            $('#deletePastes').click((e) => {
                 e.preventDefault();
                 receivedPastesController.deleteAllPastes();
             });

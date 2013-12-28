@@ -6,7 +6,7 @@ module NetPaste.PasteStores {
         public addPaste(paste: server.Paste) {
             var pastes = this.getAllPastes();
             if (pastes == null) {
-                pastes = new Array<server.Paste>();
+                pastes = [];
             }
             paste.Id = pastes.length;
             pastes.unshift(paste);
