@@ -1,63 +1,39 @@
 module NetPaste {
-    export class ReceivedPastesView {
-        private listElementId = '#receivedPastesList';
+    export class ReceivedPastesView extends Backbone.View {
 
-        constructor(initialPastes: server.Paste[]) {
-            if (initialPastes !== null) {
-                for (var i = initialPastes.length-1; i >= 0; i--) {
-                    this.addPaste(initialPastes[i]);
-                }
-                $('#deletePastes').show();
-            }  
+        private listView: ReceivedPastesListView;
+
+        constructor(options?) {
+            super(options);
+
+            this.setElement('#receivedPanel');
+
+            this.delegateEvents({ "click #deletePastes": "deleteAllPastes" })
+
+            this.collection = new Collections.ReceivedPastes();
+
+            this.collection.on("add", this.render, this);
+            this.collection.on("remove", this.render, this);
+            this.collection.on("reset", this.render, this);
+
+            this.listView = new ReceivedPastesListView({ collection: this.collection });
+
+            this.collection.fetch();
         }
 
-        public addPaste(paste: server.Paste) {
-            this.prependPaste(paste, $(this.listElementId));
-            $('#deletePastes').show();
+        render() {
+            this.$('#deletePastes').toggle(this.collection.length > 0);
+            this.listView.render();
+
+            return this;
         }
 
-        private prependPaste(paste: server.Paste, element: JQuery) {
-            element.prepend(Handlebars.templates.ReceivedPasteView(paste))
-
-            this.appendPreview(paste, element.find('#pastePreview' + paste.Id));
-        }
-
-        private appendPreview(paste: server.Paste, element: JQuery) {
-
-            if (paste.Data.Type === "text/plain") {
-                if (paste.Data.Value.indexOf("http") == 0) {
-                    element.append('<a href="' + paste.Data.Value + '" target="_blank">' + paste.Data.Value + '</a>');
-                }
-                else {
-                    element.append(paste.Data.Value);
-                }
-            }
-            else if (paste.Data.Type === "image/png") {
-                var data = atob(paste.Data.Value);
-
-                var byteNumbers = new Array(data.length);
-                for (var i = 0; i < data.length; i++) {
-                    byteNumbers[i] = data.charCodeAt(i);
-                }
-                var byteArray = new Uint8Array(byteNumbers);
-                var blob = new Blob([byteArray], { type: paste.Data.Type });
-
-                var url = URL.createObjectURL(blob);
-                var img = new Image();
-
-                img.src = url;
-                img.classList.add('img-thumbnail');
-                img.classList.add('img-responsive');
-                element.append(img);
-            }
-            else {
-                element.append('Unknown type');
-            }
+        public receivePaste(paste: Models.ReceivedPaste) {
+            this.collection.create(paste);
         }
 
         public deleteAllPastes() {
-            $(this.listElementId).empty();
-            $('#deletePastes').hide();
+            this.collection.reset();
         }
     }
 }

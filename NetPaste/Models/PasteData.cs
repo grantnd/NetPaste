@@ -1,4 +1,4 @@
-﻿namespace NetPaste
+﻿namespace NetPaste.Models
 {
     public class PasteData
     {

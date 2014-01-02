@@ -4,3 +4,7 @@
 .receivedImage {
     max-width: 250px;
 }
+
+#pasteHole {
+    display: none;
+}

@@ -14,13 +14,13 @@
 
     <div class="container">
 
-        <div class="pull-right" id="username"><h3>Neil</h3></div>
+        <div class="pull-right" id="username"><h3>@ViewBag.Username</h3></div>
         <h1>NetPaste</h1>
 
         <ul class="nav nav-pills">
-            <li class="active"><a href="#send" data-toggle="pill">Send</a></li>
+            <li class="active"><a href="#sendPanel" data-toggle="pill">Send</a></li>
             <li>
-                <a href="#received" data-toggle="pill">
+                <a href="#receivedPanel" data-toggle="pill">
                     <span class="badge pull-right" id="receivedBadge"></span>
                     Received&nbsp;
                 </a>
@@ -29,7 +29,7 @@
 
         <div class="tab-content">
 
-            <div class="tab-pane active " id="send">
+            <div class="tab-pane active " id="sendPanel">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div id="recipients-list">
@@ -40,7 +40,7 @@
                 </div>
             </div>
 
-            <div class="tab-pane" id="received">
+            <div class="tab-pane" id="receivedPanel">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div><button id="deletePastes" class="btn btn-danger" style="display: none;">Delete all pastes</button></div>
@@ -58,6 +58,10 @@
     <script src="Scripts/bootstrap.js"></script>
     <script src="Scripts/moment.js"></script>
 
+    <script src="~/Scripts/underscore.js"></script>
+    <script src="~/Scripts/backbone.js"></script>
+    <script src="~/Scripts/backbone.localStorage.js"></script>
+
     <script src="Scripts/jquery.signalR-2.0.1.min.js"></script>
     <script src="signalr/hubs"></script>
 
@@ -65,20 +69,20 @@
     <script src="~/Templates/NetPasteHelpers.js"></script>
     <script src="~/Templates/NetPasteTemplates.js"></script>
 
-    <script src="Scripts/NetPaste/PasteStores/LocalPasteStore.js"></script>
-    <script src="Scripts/NetPaste/PasteStores/PasteStore.js"></script>
-    <script src="Scripts/NetPaste/PasteDataBuilders/ImagePasteDataBuilder.js"></script>
-    <script src="Scripts/NetPaste/PasteDataBuilders/PasteDataBuilder.js"></script>
-    <script src="Scripts/NetPaste/PasteDataBuilders/PasteDataBuilderFactory.js"></script>
-    <script src="Scripts/NetPaste/PasteDataBuilders/TextPasteDataBuilder.js"></script>
-    <script src="Scripts/NetPaste/SendPasteController.js"></script>
-    <script src="Scripts/NetPaste/SendPasteView.js"></script>
-    <script src="Scripts/NetPaste/ReceivedPastesController.js"></script>
-    <script src="Scripts/NetPaste/ReceivedPastesView.js"></script>
-    <script src="Scripts/NetPaste/App.js"></script>
-
-    <script type="text/javascript">
-        var app = new NetPaste.App();
-    </script>
+    <script src="~/Scripts/NetPaste/Models/SendPasteRecipient.js"></script>
+    <script src="~/Scripts/NetPaste/Models/ReceivedPaste.js"></script>
+    <script src="~/Scripts/NetPaste/Collections/SendPasteRecipients.js"></script>
+    <script src="~/Scripts/NetPaste/Collections/ReceivedPastes.js"></script>
+    <script src="~/Scripts/NetPaste/PasteDataBuilders/ImagePasteDataBuilder.js"></script>
+    <script src="~/Scripts/NetPaste/PasteDataBuilders/PasteDataBuilder.js"></script>
+    <script src="~/Scripts/NetPaste/PasteDataBuilders/PasteDataBuilderFactory.js"></script>
+    <script src="~/Scripts/NetPaste/PasteDataBuilders/TextPasteDataBuilder.js"></script>
+    <script src="~/Scripts/NetPaste/SendPasteRecipientView.js"></script>
+    <script src="~/Scripts/NetPaste/SendPasteRecipientsListView.js"></script>
+    <script src="~/Scripts/NetPaste/SendPasteView.js"></script>
+    <script src="~/Scripts/NetPaste/ReceivedPastesView.js"></script>
+    <script src="~/Scripts/NetPaste/ReceivedPastesListView.js"></script>
+    <script src="~/Scripts/NetPaste/ReceivedPasteView.js"></script>
+    <script src="~/Scripts/NetPaste/App.js"></script>
 </body>
 </html>

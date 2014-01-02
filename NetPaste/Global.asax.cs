@@ -8,8 +8,6 @@
 
     public class MvcApplication : System.Web.HttpApplication
     {
-        UserIdentityService userIdentityService = new UserIdentityService();
-
         protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
         {
             string userId = UserIdentityService.GetUserId();

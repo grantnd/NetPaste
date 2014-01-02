@@ -3,7 +3,7 @@
     using System;
     using System.Web;
 
-    public class UserIdentityService
+    public static class UserIdentityService
     {
         private const string cookieName = "NetPasteIdentity";
 
@@ -17,21 +17,27 @@
             return HttpContext.Current.Request.Cookies.Get(cookieName).Value;
         }
 
-        internal static void Identify()
+        internal static string Identify()
         {
-            if(GetUserId() == null)
+            string userId = GetUserId();
+
+            if (userId == null)
             {
-                CreateIdentity();
+                userId = CreateIdentity();
             }
+
+            return userId;
         }
 
-        private static void CreateIdentity()
+        private static string CreateIdentity()
         {
             string userId = Guid.NewGuid().ToString();
             var cookie = new HttpCookie(cookieName, userId);
             cookie.Expires = DateTime.Now.AddYears(1);
 
             HttpContext.Current.Response.AppendCookie(cookie);
+
+            return userId;
         }
     }
 }

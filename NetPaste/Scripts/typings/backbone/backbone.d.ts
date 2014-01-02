@@ -239,6 +239,8 @@ declare module Backbone {
         uniq(isSorted?: boolean, iterator?: (element: Model, index: number) => boolean): Model[];
         without(...values: any[]): Model[];
         zip(...model: Model[]): Model[];
+
+        localStorage: any;
     }
 
     interface OptionalRoutes {

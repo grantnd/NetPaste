@@ -3,33 +3,27 @@ module NetPaste {
     export class App {
 
         private sendPasteView;
-        private sendPasteController;
-        private pasteStore;
         private receivedPastesView;
-        private receivedPastesController;
 
         constructor() {
             this.sendPasteView = new SendPasteView();
-            this.sendPasteController = new SendPasteController(this.sendPasteView);
-            this.pasteStore = new PasteStores.LocalPasteStore();
-            this.receivedPastesView = new ReceivedPastesView(this.pasteStore.getAllPastes());
-            this.receivedPastesController = new ReceivedPastesController(this.pasteStore, this.receivedPastesView);
+            this.receivedPastesView = new ReceivedPastesView();
 
-            this.initialiseSignalR(this.sendPasteController, this.receivedPastesController);
+            this.initialiseSignalR(this.sendPasteView, this.receivedPastesView);
         }
 
         private initialiseSignalR(
-            sendPasteController: SendPasteController,
-            receivedPastesController: ReceivedPastesController)
+            sendPasteView: SendPasteView,
+            receivedPastesView: ReceivedPastesView)
         {
             var netPasteHubProxy = $.connection.netPasteHub;
 
-            netPasteHubProxy.client.receivePaste = (paste: server.Paste) => {
-                receivedPastesController.receivePaste(paste);
+            netPasteHubProxy.client.receivePaste = (paste: Models.ReceivedPaste) => {
+                receivedPastesView.receivePaste(paste);
             }
 
             netPasteHubProxy.client.updateRecipients = (recipients: Array<server.UserProfile>) => {
-                sendPasteController.updateRecipients(recipients);
+                sendPasteView.updateRecipients(recipients);
             }
 
             $.connection.hub.start()
@@ -43,4 +37,8 @@ module NetPaste {
                 .fail(() => { console.log('Could not Connect!'); });
         }
     }
-} 
+
+    $(() => {
+        var app = new NetPaste.App();
+    });
+}
