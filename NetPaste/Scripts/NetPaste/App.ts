@@ -4,12 +4,41 @@ module NetPaste {
 
         private sendPasteView;
         private receivedPastesView;
+        private identityView;
 
         constructor() {
-            this.sendPasteView = new SendPasteView();
-            this.receivedPastesView = new ReceivedPastesView();
+            this.getUserIdentity().then((identity) => {
+                this.identifyUser(identity).done(() => {
+                    this.identityView = new IdentityView({ model: identity });
+                    this.sendPasteView = new SendPasteView();
+                    this.receivedPastesView = new ReceivedPastesView();
 
-            this.initialiseSignalR(this.sendPasteView, this.receivedPastesView);
+                    this.initialiseSignalR(this.sendPasteView, this.receivedPastesView);
+                });
+            });
+        }
+
+        private getUserIdentity() {
+            var identity = new Models.UserIdentity({ id: "1" });
+            identity.fetch();
+
+            var identityPromise = $.Deferred<Models.UserIdentity>();
+
+            if (!identity.get("Name")) {
+                var modal = new UsernameEntryModalView({ model: identity });
+                modal.getUsername().then(() => {
+                    identityPromise.resolve(modal.model);
+                });
+            }
+            else {
+                identityPromise.resolve(identity);
+            }
+
+            return identityPromise;
+        }
+
+        private identifyUser(identity: Models.UserIdentity) {
+            return $.post("api/identify/", identity.toJSON());
         }
 
         private initialiseSignalR(
@@ -17,7 +46,8 @@ module NetPaste {
             receivedPastesView: ReceivedPastesView)
         {
             var netPasteHubProxy = $.connection.netPasteHub;
-
+            
+            netPasteHubProxy.logging = true;
             netPasteHubProxy.client.receivePaste = (paste: Models.ReceivedPaste) => {
                 receivedPastesView.receivePaste(paste);
             }

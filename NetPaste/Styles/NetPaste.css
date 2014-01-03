@@ -1,10 +1,28 @@
 ﻿body {
 }
 
-.receivedImage {
-    max-width: 250px;
+#no-recipients {
+    display: none;
 }
 
-#pasteHole {
+#send-error {
     display: none;
+}
+
+#send-success {
+    display: none;
+}
+
+#username {
+    padding-top: 27px;
+    font-size: 14pt;
+}
+
+#pasteTarget {
+    display: none;
+    width: 100%;
+    padding: 5px;
+    color: #BBBBBB;
+    text-align: center;
+    font-weight: bold;
 }

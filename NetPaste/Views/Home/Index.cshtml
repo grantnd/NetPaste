@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link href="Content/bootstrap-theme.css" rel="stylesheet" />
-    <link href="Content/bootstrap.css" rel="stylesheet" />
-    <link href="Styles/netpaste.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Styles/netpaste.css" rel="stylesheet" />
 </head>
 <body>
 
     <div class="container">
 
-        <div class="pull-right" id="username"><h3>@ViewBag.Username</h3></div>
+        <div class="pull-right" id="username"><span class="label label-info"></span></div>
         <h1>NetPaste</h1>
 
         <ul class="nav nav-pills">
@@ -32,10 +32,13 @@
             <div class="tab-pane active " id="sendPanel">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <div id="recipients-list">
-
-                        </div>
-                        <input type="text" id="pasteHole" value="Paste here to send" />
+                        <div id="no-recipients" class="alert alert-info"><b>No recipients available</b></div>
+                        <div id="recipients-list"></div>
+                        <p>
+                            <input type="text" id="pasteTarget" value="Paste here to send" />
+                        </p>
+                        <div id="send-success" class="alert alert-success"><b>Paste sent</b></div>
+                        <div id="send-error" class="alert alert-danger"></div>
                     </div>
                 </div>
             </div>
@@ -54,16 +57,32 @@
 
     </div>
 
-    <script src="Scripts/jquery-2.0.3.js"></script>
-    <script src="Scripts/bootstrap.js"></script>
-    <script src="Scripts/moment.js"></script>
+    <div id="username-modal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Hello stranger!</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control" id="username-input" placeholder="Please choose a username">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="username-save" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Scripts/jquery-2.0.3.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/moment.js"></script>
 
     <script src="~/Scripts/underscore.js"></script>
     <script src="~/Scripts/backbone.js"></script>
     <script src="~/Scripts/backbone.localStorage.js"></script>
 
-    <script src="Scripts/jquery.signalR-2.0.1.min.js"></script>
-    <script src="signalr/hubs"></script>
+    <script src="~/Scripts/jquery.signalR-2.0.1.min.js"></script>
+    <script src="~/signalr/hubs"></script>
 
     <script src="~/Scripts/handlebars.runtime.js"></script>
     <script src="~/Templates/NetPasteHelpers.js"></script>
@@ -71,12 +90,15 @@
 
     <script src="~/Scripts/NetPaste/Models/SendPasteRecipient.js"></script>
     <script src="~/Scripts/NetPaste/Models/ReceivedPaste.js"></script>
+    <script src="~/Scripts/NetPaste/Models/UserIdentity.js"></script>
     <script src="~/Scripts/NetPaste/Collections/SendPasteRecipients.js"></script>
     <script src="~/Scripts/NetPaste/Collections/ReceivedPastes.js"></script>
     <script src="~/Scripts/NetPaste/PasteDataBuilders/ImagePasteDataBuilder.js"></script>
     <script src="~/Scripts/NetPaste/PasteDataBuilders/PasteDataBuilder.js"></script>
     <script src="~/Scripts/NetPaste/PasteDataBuilders/PasteDataBuilderFactory.js"></script>
     <script src="~/Scripts/NetPaste/PasteDataBuilders/TextPasteDataBuilder.js"></script>
+    <script src="~/Scripts/NetPaste/IdentityView.js"></script>
+    <script src="~/Scripts/NetPaste/UsernameEntryModalView.js"></script>
     <script src="~/Scripts/NetPaste/SendPasteRecipientView.js"></script>
     <script src="~/Scripts/NetPaste/SendPasteRecipientsListView.js"></script>
     <script src="~/Scripts/NetPaste/SendPasteView.js"></script>

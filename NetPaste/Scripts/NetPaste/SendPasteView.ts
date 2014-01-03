@@ -9,8 +9,8 @@ module NetPaste {
             this.setElement("#sendPanel");
 
             this.delegateEvents({
-                "paste #pasteHole": "sendPaste",
-                "keypress #pasteHole": "supressTyping"
+                "paste #pasteTarget": "sendPaste",
+                "keypress #pasteTarget": "supressTyping"
             });
 
             this.collection = new Collections.SendPasteRecipients();
@@ -63,6 +63,12 @@ module NetPaste {
             builder.BuildData(clipboardData).then((value) => {
                 var netPasteHubProxy = $.connection.netPasteHub;
                 netPasteHubProxy.server.sendPaste(value, recipientUserIds)
+                    .done(() => {
+                        this.$('#send-success').show().delay(1500).fadeOut();
+                    })
+                    .fail((error) => {
+                        this.$("#send-error").html(error).show().delay(4000).fadeOut();
+                    });
             });
         }
 
@@ -72,7 +78,7 @@ module NetPaste {
 
         private selectionChanged() {
             var selectedRecipients = this.collection.where({ Selected: true });
-            this.$('#pasteHole').toggle(selectedRecipients && selectedRecipients.length > 0);
+            this.$('#pasteTarget').toggle(selectedRecipients && selectedRecipients.length > 0);
         }
     }
 }

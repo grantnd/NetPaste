@@ -139,6 +139,8 @@ declare module Backbone {
         pick(...keys: string[]): any;
         omit(keys: string[]): any;
         omit(...keys: string[]): any;
+
+        localStorage: any;
     }
 
     class Collection extends ModelBase {
