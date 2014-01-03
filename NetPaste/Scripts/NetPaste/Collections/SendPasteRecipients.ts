@@ -8,7 +8,7 @@ module NetPaste.Collections {
         }
 
         public comparator(recipient: Models.SendPasteRecipient) {
-            return recipient.get("Name");
+            return recipient.get("Name").toLowerCase();
         }
     }
 }

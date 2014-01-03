@@ -1,4 +1,4 @@
-module NetPaste {
+module NetPaste.Views {
     export class UsernameEntryModalView extends Backbone.View {
 
         private usernamePromise: JQueryDeferred<string>;

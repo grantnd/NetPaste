@@ -1,6 +1,6 @@
-module NetPaste {
+module NetPaste.PasteDataBuilders {
     export class ImagePasteDataBuilder implements PasteDataBuilder {
-        public BuildData(clipboardData: any): JQueryGenericPromise<server.PasteData> {
+        public buildData(clipboardData: any): JQueryGenericPromise<server.PasteData> {
             var blob = clipboardData.items[0].getAsFile(clipboardData.items[0].type);
 
             var promise = $.Deferred<server.PasteData>();

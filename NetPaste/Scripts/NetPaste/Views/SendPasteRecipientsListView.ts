@@ -1,4 +1,4 @@
-module NetPaste {
+module NetPaste.Views {
     export class SendPasteRecipientsListView extends Backbone.View {
         collection: NetPaste.Collections.SendPasteRecipients;
 

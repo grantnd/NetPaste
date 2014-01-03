@@ -1,4 +1,4 @@
-module NetPaste {
+module NetPaste.Views {
     export class SendPasteView extends Backbone.View {
 
         private sendPasteRecipientsView: SendPasteRecipientsListView;
@@ -81,9 +81,9 @@ module NetPaste {
         }
 
         private sendClipboardData(clipboardData, recipientUserIds: Array<string>) {
-            var builder = PasteDataBuilderFactory.GetBuilder(clipboardData);
+            var builder = PasteDataBuilders.PasteDataBuilderFactory.getBuilder(clipboardData);
 
-            builder.BuildData(clipboardData).then((value) => {
+            builder.buildData(clipboardData).then((value) => {
                 var netPasteHubProxy = $.connection.netPasteHub;
                 netPasteHubProxy.server.sendPaste(value, recipientUserIds)
                     .done(() => {

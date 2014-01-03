@@ -9,9 +9,9 @@ module NetPaste {
         constructor() {
             this.getUserIdentity().then((identity) => {
                 this.identifyUser(identity).done(() => {
-                    this.identityView = new IdentityView({ model: identity });
-                    this.sendPasteView = new SendPasteView();
-                    this.receivedPastesView = new ReceivedPastesView();
+                    this.identityView = new Views.IdentityView({ model: identity });
+                    this.sendPasteView = new Views.SendPasteView();
+                    this.receivedPastesView = new Views.ReceivedPastesView();
 
                     this.initialiseSignalR(this.sendPasteView, this.receivedPastesView);
                 });
@@ -25,7 +25,7 @@ module NetPaste {
             var identityPromise = $.Deferred<Models.UserIdentity>();
 
             if (!identity.get("Name")) {
-                var modal = new UsernameEntryModalView({ model: identity });
+                var modal = new Views.UsernameEntryModalView({ model: identity });
                 modal.getUsername().then(() => {
                     identityPromise.resolve(modal.model);
                 });
@@ -42,8 +42,8 @@ module NetPaste {
         }
 
         private initialiseSignalR(
-            sendPasteView: SendPasteView,
-            receivedPastesView: ReceivedPastesView)
+            sendPasteView: Views.SendPasteView,
+            receivedPastesView: Views.ReceivedPastesView)
         {
             var netPasteHubProxy = $.connection.netPasteHub;
             

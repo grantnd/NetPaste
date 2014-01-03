@@ -1,6 +1,6 @@
-module NetPaste {
+module NetPaste.PasteDataBuilders {
     export class PasteDataBuilderFactory {
-        public static GetBuilder(clipboardData: any): PasteDataBuilder {
+        public static getBuilder(clipboardData: any): PasteDataBuilder {
             if (clipboardData.types[0] === "Files") {
                 return new ImagePasteDataBuilder();
             }

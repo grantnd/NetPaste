@@ -47,6 +47,15 @@
     <Reference Include="Elmah">
       <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
     </Reference>
+    <Reference Include="Glimpse.AspNet">
+      <HintPath>..\packages\Glimpse.AspNet.1.7.0\lib\net45\Glimpse.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Core">
+      <HintPath>..\packages\Glimpse.1.8.1\lib\net45\Glimpse.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.SignalR">
+      <HintPath>..\packages\Glimpse.SignalR.1.0.0\lib\net40\Glimpse.SignalR.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Core">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.0.1\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
     </Reference>
@@ -140,6 +149,7 @@
     <None Include="Properties\PublishProfiles\netpaste.pubxml" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\backbone.js" />
+    <Content Include="Scripts\backbone.localStorage.min.js" />
     <Content Include="Scripts\backbone.localStorage.js" />
     <Content Include="Scripts\backbone.min.js" />
     <Content Include="Scripts\underscore.js" />
@@ -205,6 +215,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\IdentifyController.cs" />
+    <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -235,14 +246,18 @@
     <TypeScriptCompile Include="Scripts\NetPaste\PasteDataBuilders\ImagePasteDataBuilder.ts" />
     <TypeScriptCompile Include="Scripts\NetPaste\PasteDataBuilders\PasteDataBuilderFactory.ts" />
     <TypeScriptCompile Include="Scripts\NetPaste\PasteDataBuilders\PasteDataBuilder.ts" />
-    <TypeScriptCompile Include="Scripts\NetPaste\ReceivedPastesListView.ts" />
-    <TypeScriptCompile Include="Scripts\NetPaste\ReceivedPasteView.ts" />
-    <TypeScriptCompile Include="Scripts\NetPaste\ReceivedPastesView.ts" />
-    <TypeScriptCompile Include="Scripts\NetPaste\SendPasteRecipientView.ts" />
-    <TypeScriptCompile Include="Scripts\NetPaste\SendPasteRecipientsListView.ts" />
-    <TypeScriptCompile Include="Scripts\NetPaste\SendPasteView.ts" />
-    <TypeScriptCompile Include="Scripts\NetPaste\IdentityView.ts" />
-    <TypeScriptCompile Include="Scripts\NetPaste\UsernameEntryModalView.ts" />
+    <TypeScriptCompile Include="Scripts\NetPaste\PasteDataPreviews\ImagePasteDataPreview.ts" />
+    <TypeScriptCompile Include="Scripts\NetPaste\PasteDataPreviews\TextPasteDataPreview.ts" />
+    <TypeScriptCompile Include="Scripts\NetPaste\PasteDataPreviews\PasteDataPreviewFactory.ts" />
+    <TypeScriptCompile Include="Scripts\NetPaste\PasteDataPreviews\PasteDataPreview.ts" />
+    <TypeScriptCompile Include="Scripts\NetPaste\Views\ReceivedPastesListView.ts" />
+    <TypeScriptCompile Include="Scripts\NetPaste\Views\ReceivedPasteView.ts" />
+    <TypeScriptCompile Include="Scripts\NetPaste\Views\ReceivedPastesView.ts" />
+    <TypeScriptCompile Include="Scripts\NetPaste\Views\SendPasteRecipientView.ts" />
+    <TypeScriptCompile Include="Scripts\NetPaste\Views\SendPasteRecipientsListView.ts" />
+    <TypeScriptCompile Include="Scripts\NetPaste\Views\SendPasteView.ts" />
+    <TypeScriptCompile Include="Scripts\NetPaste\Views\IdentityView.ts" />
+    <TypeScriptCompile Include="Scripts\NetPaste\Views\UsernameEntryModalView.ts" />
     <TypeScriptCompile Include="Scripts\typings\backbone\backbone.localStorage.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\backbone\backbone.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\bootstrap\bootstrap.d.ts" />
@@ -258,7 +273,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\NetPaste\PasteDataPreviews\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

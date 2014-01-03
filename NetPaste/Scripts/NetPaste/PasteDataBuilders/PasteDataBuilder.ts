@@ -1,5 +1,5 @@
-module NetPaste {
+module NetPaste.PasteDataBuilders {
     export interface PasteDataBuilder {
-        BuildData(clipboardData: any): JQueryGenericPromise<server.PasteData>;
+        buildData(clipboardData: any): JQueryGenericPromise<server.PasteData>;
     }
 }
