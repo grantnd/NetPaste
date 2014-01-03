@@ -14,34 +14,57 @@ module NetPaste {
             });
 
             this.collection = new Collections.SendPasteRecipients();
-            this.collection.on("change:Selected", this.selectionChanged, this);
+            this.collection.on("change:Selected", this.render, this);
+            this.collection.on("add", this.render, this);
+            this.collection.on("remove", this.render, this);
 
             this.sendPasteRecipientsView = new SendPasteRecipientsListView({ collection: this.collection });
+
+            this.render();
         }
         
-        public updateRecipients(recipients: Array<server.UserProfile>) {
-            this.collection.reset();
+        public render()
+        {
+            this.$("#no-recipients").toggle(this.collection.length == 0);
 
-            for (var i = 0; i < recipients.length; i++) {
+            var selectedRecipients = this.collection.where({ Selected: true });
+            this.$('#pasteTarget').toggle(selectedRecipients && selectedRecipients.length > 0);
+
+            return this;
+        }
+
+        public addRecipient(recipient: server.UserProfile) {
+            if (!this.collection.get(recipient.UserId)) {
                 this.collection.add(new Models.SendPasteRecipient({
-                    UserId: recipients[i].UserId,
-                    HostAddress: recipients[i].HostAddress,
-                    Name: recipients[i].Name,
+                    UserId: recipient.UserId,
+                    HostAddress: recipient.HostAddress,
+                    Name: recipient.Name,
                     Selected: false
                 }));
             }
         }
-              
+
+        public removeRecipient(recipient: server.UserProfile) {
+            this.collection.remove(this.collection.get(recipient.UserId));
+        }
+
         private sendPaste(e: JQueryEventObject) {
             e.preventDefault();
 
-            var originalEvent: any = e.originalEvent;
-            var clipboardData = originalEvent.clipboardData;
+            try
+            {
+                var originalEvent: any = e.originalEvent;
+                var clipboardData = originalEvent.clipboardData;
 
-            var recipients = this.getSelectedRecipientUserIds();
+                var recipients = this.getSelectedRecipientUserIds();
 
-            if (recipients && recipients.length > 0) {
-                this.sendClipboardData(clipboardData, recipients);
+                if (recipients && recipients.length > 0) {
+                    this.sendClipboardData(clipboardData, recipients);
+                }
+            }
+            catch(err)
+            {
+                this.showError(err);
             }
         }
         
@@ -67,7 +90,7 @@ module NetPaste {
                         this.$('#send-success').show().delay(1500).fadeOut();
                     })
                     .fail((error) => {
-                        this.$("#send-error").html(error).show().delay(4000).fadeOut();
+                        this.showError(error);
                     });
             });
         }
@@ -76,9 +99,8 @@ module NetPaste {
             e.preventDefault();
         }
 
-        private selectionChanged() {
-            var selectedRecipients = this.collection.where({ Selected: true });
-            this.$('#pasteTarget').toggle(selectedRecipients && selectedRecipients.length > 0);
+        private showError(error) {
+            this.$("#send-error").html(error).show().delay(4000).fadeOut();
         }
     }
 }

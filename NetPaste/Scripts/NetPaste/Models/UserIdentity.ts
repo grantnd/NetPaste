@@ -3,8 +3,9 @@ module NetPaste.Models {
         Name: string;
 
         constructor(options?) {
-            super(options);
             this.localStorage = new Backbone.LocalStorage("UserIdentity");
+
+            super(options);
         }
 
         public validate(attrs, options?) {

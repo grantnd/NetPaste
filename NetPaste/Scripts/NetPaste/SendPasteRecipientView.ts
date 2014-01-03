@@ -17,7 +17,7 @@ module NetPaste {
 
         render() {
             this.$el.append((Handlebars.templates.SendPasteRecipientView(this.model.toJSON())));
-
+            this.$('input:checkbox').attr("checked", this.model.get("Selected"));
             return this;
         }
     }

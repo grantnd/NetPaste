@@ -52,17 +52,25 @@ module NetPaste {
                 receivedPastesView.receivePaste(paste);
             }
 
-            netPasteHubProxy.client.updateRecipients = (recipients: Array<server.UserProfile>) => {
-                sendPasteView.updateRecipients(recipients);
+            netPasteHubProxy.client.recipientConnected = (recipient: server.UserProfile) => {
+                sendPasteView.addRecipient(recipient);
+            }
+
+            netPasteHubProxy.client.recipientDisconnected = (recipient: server.UserProfile) => {
+                sendPasteView.removeRecipient(recipient);
             }
 
             $.connection.hub.start()
-                .done(() =>
-                {
+                .done(() => {
                     console.log('Now connected, connection ID=' + $.connection.hub.id);
-                    //$.connection.netPasteHub.server.getRecipients().done(function (recipients: Array<server.UserProfile>) {
-                    //    sendPasteController.updateRecipients(recipients);
-                    //});
+                    
+                    netPasteHubProxy.server.getRecipients()
+                        .done(function (recipients: Array<server.UserProfile>) {
+                            for (var i = 0; i < recipients.length; i++) {
+                                sendPasteView.addRecipient(recipients[i]);
+                            }
+                        });
+
                 })
                 .fail(() => { console.log('Could not Connect!'); });
         }

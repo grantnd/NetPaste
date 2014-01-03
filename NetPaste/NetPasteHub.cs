@@ -5,6 +5,7 @@
     using NetPaste.Services;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     public class NetPasteHub : Hub
@@ -18,11 +19,8 @@
 
             userConnectionMapping.Add(userId, Context.ConnectionId);
 
-            Clients.All.updateRecipients(
-                UserProfileService.Instance.GetProfiles(
-                    userConnectionMapping.GetConnectedUserIds()
-                )
-            );
+            Clients.AllExcept(userConnectionMapping.GetConnections(userId).ToArray())
+                .recipientConnected(UserProfileService.Instance.GetProfile(userId));
 
             return base.OnConnected();
         }
@@ -33,16 +31,14 @@
             string userId = Context.User.Identity.Name;
             
             userConnectionMapping.Remove(userId, Context.ConnectionId);
+
             if(!userConnectionMapping.UserIsConnected(userId))
             {
+                Clients.AllExcept(userConnectionMapping.GetConnections(userId).ToArray())
+                    .recipientDisconnected(UserProfileService.Instance.GetProfile(userId));
+
                 UserProfileService.Instance.RemoveProfile(userId);
             }
-
-            Clients.All.updateRecipients(
-                UserProfileService.Instance.GetProfiles(
-                    userConnectionMapping.GetConnectedUserIds()
-                )
-            );
 
             return base.OnDisconnected();
         }
@@ -63,11 +59,13 @@
             }
         }
 
+        [Authorize]
         public IEnumerable<UserProfile> GetRecipients()
         {
-            return UserProfileService.Instance.GetProfiles(
-                    userConnectionMapping.GetConnectedUserIds()
-                );
+            string userId = Context.User.Identity.Name;
+
+            return UserProfileService.Instance.GetProfiles(userConnectionMapping.GetConnectedUserIds())
+                .Where(p => p.UserId != userId);
         }
     }
 }
