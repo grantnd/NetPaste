@@ -27,7 +27,7 @@ module NetPaste.Views {
 
         private renderPreview() {
 
-            var element = this.$("#pastePreview");
+            var element = this.$("#paste-preview");
             var pasteData: server.PasteData = this.model.toJSON().Data;
 
             var pasteDataPreview = PasteDataPreviews.PasteDataPreviewFactory.getPreview(pasteData);
