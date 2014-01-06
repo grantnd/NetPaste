@@ -1,8 +1,8 @@
 ﻿namespace NetPaste
 {
     using Microsoft.AspNet.SignalR;
+    using NetPaste.Components;
     using NetPaste.Models;
-    using NetPaste.Services;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
@@ -11,18 +11,16 @@
 
     public class NetPasteHub : Hub
     {
-        private static UserConnectionMapping userConnectionMapping = new UserConnectionMapping();
-
         public override Task OnConnected()
         {
             try
             {
                 string userId = Context.User.Identity.Name;
 
-                userConnectionMapping.Add(userId, Context.ConnectionId);
+                UserConnectionMapping.Instance.Add(userId, Context.ConnectionId);
 
-                Clients.AllExcept(userConnectionMapping.GetConnections(userId).ToArray())
-                    .recipientConnected(UserProfileService.Instance.GetProfile(userId));
+                Clients.AllExcept(UserConnectionMapping.Instance.GetConnections(userId).ToArray())
+                    .recipientConnected(UserProfileStore.Instance.GetProfile(userId));
 
                 return base.OnConnected();
             }
@@ -45,7 +43,7 @@
                 var paste = new Paste()
                 {
                     Data = pasteData,
-                    Sender = UserProfileService.Instance.GetProfile(Context.User.Identity.Name),
+                    Sender = UserProfileStore.Instance.GetProfile(Context.User.Identity.Name),
                     Received = DateTime.Now
                 };
 
@@ -73,7 +71,7 @@
             {
                 string userId = Context.User.Identity.Name;
 
-                return UserProfileService.Instance.GetProfiles(userConnectionMapping.GetConnectedUserIds())
+                return UserProfileStore.Instance.GetProfiles(UserConnectionMapping.Instance.GetConnectedUserIds())
                     .Where(p => p.UserId != userId);
             }
             catch (Exception ex)
@@ -94,14 +92,14 @@
             {
                 string userId = Context.User.Identity.Name;
 
-                userConnectionMapping.Remove(userId, Context.ConnectionId);
+                UserConnectionMapping.Instance.Remove(userId, Context.ConnectionId);
 
-                if (!userConnectionMapping.UserIsConnected(userId))
+                if (!UserConnectionMapping.Instance.UserIsConnected(userId))
                 {
-                    Clients.AllExcept(userConnectionMapping.GetConnections(userId).ToArray())
-                        .recipientDisconnected(UserProfileService.Instance.GetProfile(userId));
+                    Clients.AllExcept(UserConnectionMapping.Instance.GetConnections(userId).ToArray())
+                        .recipientDisconnected(UserProfileStore.Instance.GetProfile(userId));
 
-                    UserProfileService.Instance.RemoveProfile(userId);
+                    UserProfileStore.Instance.RemoveProfile(userId);
                 }
 
                 return base.OnDisconnected();

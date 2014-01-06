@@ -1,9 +1,9 @@
-﻿namespace NetPaste
+﻿namespace NetPaste.Components.Identity
 {
     using System;
     using System.Web;
 
-    public static class UserIdentityService
+    public static class UserIdentityProvider
     {
         private const string cookieName = "NetPasteIdentity";
 

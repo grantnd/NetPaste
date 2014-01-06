@@ -1,12 +1,20 @@
-﻿namespace NetPaste.Services
+﻿namespace NetPaste.Components
 {
     using System.Collections.Generic;
     using System.Linq;
 
     public class UserConnectionMapping
     {
-        private readonly Dictionary<string, HashSet<string>> userConnections =
-               new Dictionary<string, HashSet<string>>();
+        private static UserConnectionMapping instance = new UserConnectionMapping();
+
+        public static UserConnectionMapping Instance { get { return instance; } }
+
+        private readonly Dictionary<string, HashSet<string>> userConnections;
+
+        private UserConnectionMapping()
+        {
+            this.userConnections = new Dictionary<string, HashSet<string>>();
+        }
 
         public int Count
         {
@@ -75,6 +83,11 @@
         internal bool UserIsConnected(string userId)
         {
             return this.userConnections.ContainsKey(userId);
+        }
+
+        internal void Reset()
+        {
+            this.userConnections.Clear();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace NetPaste
 {
     using Microsoft.AspNet.SignalR;
+    using NetPaste.Components.Identity;
     using System;
     using System.Web;
     using System.Web.Http;
@@ -12,7 +13,7 @@
     {
         protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
         {
-            string userId = UserIdentityService.GetUserId();
+            string userId = UserIdentityProvider.GetUserId();
 
             if (userId != null)
             {

@@ -62,17 +62,14 @@ module NetPaste {
 
             $.connection.hub.start()
                 .done(() => {
-                    console.log('Now connected, connection ID=' + $.connection.hub.id);
-                    
                     netPasteHubProxy.server.getRecipients()
                         .done(function (recipients: Array<server.UserProfile>) {
                             for (var i = 0; i < recipients.length; i++) {
                                 sendPasteView.addRecipient(recipients[i]);
                             }
                         });
-
                 })
-                .fail(() => { console.log('Could not Connect!'); });
+                .fail((error) => { console.log('Could not connect ' + error); });
         }
     }
 

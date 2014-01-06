@@ -1,34 +1,34 @@
-﻿namespace NetPaste.Services
+﻿namespace NetPaste.Components
 {
     using NetPaste.Models;
     using System.Collections.Generic;
 
-    public class UserProfileService
+    public class UserProfileStore
     {
-        private static UserProfileService _instance = new UserProfileService();
+        private static UserProfileStore instance = new UserProfileStore();
 
-        public static UserProfileService Instance { get { return _instance; } }
+        public static UserProfileStore Instance { get { return instance; } }
 
         private Dictionary<string, UserProfile> userIdToProfileLookup;
 
-        private UserProfileService()
+        private UserProfileStore()
         {
-            userIdToProfileLookup = new Dictionary<string, UserProfile>();
+            this.userIdToProfileLookup = new Dictionary<string, UserProfile>();
         }
 
         internal void SaveProfile(string userId, UserProfile profile)
         {
-            userIdToProfileLookup[userId] = profile;
+            this.userIdToProfileLookup[userId] = profile;
         }
 
         internal void RemoveProfile(string userId)
         {
-            userIdToProfileLookup.Remove(userId);
+            this.userIdToProfileLookup.Remove(userId);
         }
 
         internal UserProfile GetProfile(string userId)
         {
-            return userIdToProfileLookup[userId];
+            return this.userIdToProfileLookup[userId];
         }
 
         internal IEnumerable<UserProfile> GetProfiles(IEnumerable<string> userIds)
@@ -40,6 +40,11 @@
                     yield return this.userIdToProfileLookup[userId];
                 }
             }
+        }
+
+        internal void Reset()
+        {
+            this.userIdToProfileLookup.Clear();
         }
     }
 }

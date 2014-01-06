@@ -1,7 +1,8 @@
 ﻿namespace NetPaste.Controllers
 {
+    using NetPaste.Components;
+    using NetPaste.Components.Identity;
     using NetPaste.Models;
-    using NetPaste.Services;
     using System.Web;
     using System.Web.Http;
 
@@ -9,7 +10,7 @@
     {
         public void Post([FromBody]IdentifyModel model)
         {
-            string userId = UserIdentityService.Identify();
+            string userId = UserIdentityProvider.Identify();
 
             var profile = new UserProfile()
             {
@@ -18,7 +19,7 @@
                 Name = model.Name
             };
 
-            UserProfileService.Instance.SaveProfile(userId, profile);
+            UserProfileStore.Instance.SaveProfile(userId, profile);
         }
     }
 }

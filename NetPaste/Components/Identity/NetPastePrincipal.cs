@@ -1,4 +1,4 @@
-﻿namespace NetPaste
+﻿namespace NetPaste.Components.Identity
 {
     using System.Security.Principal;
 
