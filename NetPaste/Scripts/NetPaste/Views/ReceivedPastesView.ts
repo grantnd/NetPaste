@@ -12,9 +12,7 @@ module NetPaste.Views {
 
             this.collection = new Collections.ReceivedPastes();
 
-            this.collection.on("add", this.render, this);
-            this.collection.on("remove", this.render, this);
-            this.collection.on("reset", this.render, this);
+            this.collection.on("add remove reset", this.render, this);
 
             this.listView = new ReceivedPastesListView({ collection: this.collection });
 

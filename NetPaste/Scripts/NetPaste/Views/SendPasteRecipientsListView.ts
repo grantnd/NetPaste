@@ -7,8 +7,7 @@ module NetPaste.Views {
 
             this.setElement("#recipients-list");
 
-            this.collection.on("add", this.render, this);
-            this.collection.on("remove", this.render, this);
+            this.collection.on("add remove", this.render, this);
         }
         
         render() {

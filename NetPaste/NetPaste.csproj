@@ -215,7 +215,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\IdentifyController.cs" />
-    <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -231,6 +230,7 @@
     <Compile Include="Services\UserIdentityService.cs" />
     <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Services\UserProfileService.cs" />
+    <Compile Include="TraceHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Models\PasteData.cs.d.ts">

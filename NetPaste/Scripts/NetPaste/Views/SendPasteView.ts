@@ -14,9 +14,7 @@ module NetPaste.Views {
             });
 
             this.collection = new Collections.SendPasteRecipients();
-            this.collection.on("change:Selected", this.render, this);
-            this.collection.on("add", this.render, this);
-            this.collection.on("remove", this.render, this);
+            this.collection.on("change:Selected add remove", this.render, this);
 
             this.sendPasteRecipientsView = new SendPasteRecipientsListView({ collection: this.collection });
 
@@ -35,12 +33,9 @@ module NetPaste.Views {
 
         public addRecipient(recipient: server.UserProfile) {
             if (!this.collection.get(recipient.UserId)) {
-                this.collection.add(new Models.SendPasteRecipient({
-                    UserId: recipient.UserId,
-                    HostAddress: recipient.HostAddress,
-                    Name: recipient.Name,
-                    Selected: false
-                }));
+                this.collection.add(new Models.SendPasteRecipient(
+                    _.pick(recipient, 'UserId', 'HostAddress', 'Name')
+                ));
             }
         }
 
